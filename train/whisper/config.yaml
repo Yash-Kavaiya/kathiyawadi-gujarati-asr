@@ -1,0 +1,28 @@
+model: openai/whisper-large-v3-turbo
+output_dir: runs/whisper-turbo-gu-r1
+seed: 0
+
+# weight = upsampling factor. Aim for Kathiyawadi ~30-40% of what the model sees.
+train:
+  - {path: data/manifests/kathiyawadi_train.jsonl, weight: 4}   # gold
+  - {path: data/manifests/pseudo.jsonl, weight: 1}              # filtered pseudo/subtitle labels
+  - {path: data/manifests/public_train.jsonl, weight: 1}        # IndicVoices/Kathbath/Shrutilipi/CV gu
+dev: data/manifests/kathiyawadi_dev.jsonl
+max_dev: 2000
+
+training_args:
+  per_device_train_batch_size: 32
+  per_device_eval_batch_size: 32
+  gradient_accumulation_steps: 2
+  learning_rate: 1.0e-5
+  warmup_steps: 500
+  max_steps: 20000
+  lr_scheduler_type: cosine
+  bf16: true
+  gradient_checkpointing: true
+  eval_strategy: steps
+  eval_steps: 1000
+  save_steps: 1000
+  save_total_limit: 3
+  logging_steps: 50
+  dataloader_num_workers: 8

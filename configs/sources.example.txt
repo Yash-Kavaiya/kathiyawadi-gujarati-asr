@@ -1,0 +1,5 @@
+# One YouTube channel/playlist URL per line. Copy to configs/sources.txt (git-ignored).
+# Optional metadata after "|": speaker=..., dialect=..., district=...
+# Only channels you own or have written permission to use.
+https://www.youtube.com/@your-channel/videos | dialect=kathiyawadi, district=rajkot
+# https://www.youtube.com/playlist?list=XXXX | speaker=spk_012, dialect=kathiyawadi

@@ -1,0 +1,23 @@
+# Every model in the comparison table. `kind` selects the loader in kgasr/asr.py.
+# Gated repos (AI4Bharat) need access approved on huggingface.co + `huggingface-cli login`.
+models:
+  indicconformer_gu:     {kind: nemo, id: ai4bharat/indicconformer_stt_gu_hybrid_ctc_rnnt_large}
+  indicconformer_600m:   {kind: indicconformer_multi, id: ai4bharat/indic-conformer-600m-multilingual}
+  whisper_large_v3:      {kind: whisper, id: openai/whisper-large-v3}
+  whisper_large_v3_turbo: {kind: whisper, id: openai/whisper-large-v3-turbo}
+  vasista_whisper_medium: {kind: whisper, id: vasista22/whisper-gujarati-medium}
+  mms_1b_all:            {kind: mms, id: facebook/mms-1b-all}
+  # IndicWhisper is distributed via github.com/AI4Bharat/vistaar, not the HF Hub: download, then set the path.
+  # indicwhisper:        {kind: whisper, id: /models/indicwhisper-gujarati}
+  # Our models (add after each training round):
+  # ours_conformer_r1:   {kind: nemo, id: runs/conformer-gu-r1/best.nemo}
+  # ours_whisper_r1:     {kind: whisper, id: runs/whisper-turbo-gu-r1/best}
+
+# Test sets as manifests (audio_filepath + text). Build public ones with eval/export_public.py.
+testsets:
+  kathiyawadi_test: data/manifests/kathiyawadi_test.jsonl
+  fleurs_gu:        data/manifests/eval/fleurs_gu_test.jsonl
+  kathbath_gu:      data/manifests/eval/kathbath_gu_test_known.jsonl
+  kathbath_gu_noisy: data/manifests/eval/kathbath_gu_test_noisy.jsonl
+  indicvoices_gu:   data/manifests/eval/indicvoices_gu_valid.jsonl
+  commonvoice_gu:   data/manifests/eval/commonvoice_gu_test.jsonl

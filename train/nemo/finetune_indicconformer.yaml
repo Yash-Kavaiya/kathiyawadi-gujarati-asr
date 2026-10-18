@@ -1,0 +1,40 @@
+# Fine-tune AI4Bharat IndicConformer (Gujarati hybrid CTC/RNNT) with NeMo.
+# Used by train/nemo/train.py; values here override the checkpoint's own config.
+
+init_from: ai4bharat/indicconformer_stt_gu_hybrid_ctc_rnnt_large   # HF repo (gated) or local .nemo
+output_dir: runs/conformer-gu-r1
+
+train_manifests:   # NeMo concatenates these; repeat a path to upsample it
+  - data/manifests/kathiyawadi_train.jsonl
+  - data/manifests/kathiyawadi_train.jsonl
+  - data/manifests/kathiyawadi_train.jsonl
+  - data/manifests/kathiyawadi_train.jsonl
+  - data/manifests/pseudo.jsonl
+  - data/manifests/public_train.jsonl
+dev_manifest: data/manifests/kathiyawadi_dev.jsonl
+
+batch_size: 32
+max_duration: 20.0
+min_duration: 1.0
+num_workers: 8
+speed_perturb: true      # 0.9 / 1.0 / 1.1
+
+optim:
+  name: adamw
+  lr: 1.0e-4
+  betas: [0.9, 0.98]
+  weight_decay: 1.0e-3
+  sched:
+    name: CosineAnnealing
+    warmup_steps: 1000
+    min_lr: 1.0e-6
+
+trainer:
+  devices: -1
+  accelerator: gpu
+  precision: bf16-mixed
+  max_steps: 40000
+  val_check_interval: 1000
+  accumulate_grad_batches: 2
+  gradient_clip_val: 1.0
+  log_every_n_steps: 50

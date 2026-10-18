@@ -1,0 +1,20 @@
+# Audio and large artefacts never go in git; only manifests/metadata do.
+data/raw/
+data/segments/
+data/eval_audio/
+*.wav
+*.flac
+*.mp3
+*.m4a
+*.webm
+runs/
+lm/*.arpa
+lm/*.bin
+lm/*.txt
+eval/results/hyps/
+configs/sources.txt
+
+__pycache__/
+*.egg-info/
+.pytest_cache/
+.venv/
